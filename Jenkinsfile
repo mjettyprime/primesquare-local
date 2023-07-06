@@ -11,16 +11,16 @@ pipeline {
     }
 
     stages {
-        stage('clone') {
-            steps {
-                // Get some code from a GitHub repository
-                git branch: 'main', credentialsId: 'Git-hub', url: '$(Repo)'
-            }
-        }    
+        // stage('clone') {
+        //     steps {
+        //         // Get some code from a GitHub repository
+        //         git credentialsId: 'Git-hub', url: "${Repo}"
+        //     }
+        // }    
         stage('Build') {
             steps {
                 sh "mvn clean install"
-            }    // Run Maven on a Unix agent.
+            }    
         }        
     }
 }
