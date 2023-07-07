@@ -13,10 +13,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                 	input {
-                    message: 'Proceed or Abort'
-                    ok: 'Continue'
-			}
+                 	input message: 'Proceed or Abort', ok: 'Continue'
 			sh "mvn clean install"
             }    
         }        
