@@ -29,18 +29,23 @@ pipeline {
 		stage('Push artifacts into artifactory') {
             steps {
               rtUpload (
-                serverId: 'my-artifactory',
+                serverId: 'admin',
                 spec: '''{
                       "files": [
                         {
-                          "pattern": "*.war",
-                          "target": "example-repo-local/build-files/"
+                          "pattern": "module-a/target*.jar",
+                          "target": "Test-repo"
                         }
                     ]
                 }'''
               )
+          }
+        }
+		stage('Archieving the Artifact'){
+			steps{
+			archiveArtifacts artifacts: 'module-a/target*.jar', followSymlinks: false
 			}
-		}
+		}		
 			
 		}
 	}
