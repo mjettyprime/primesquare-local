@@ -26,16 +26,22 @@ pipeline {
 				}
 			}
 		}
-		stage('Deploy to Environment') {
+
+		stage('upload to Environment') {
             steps {
                 script {
                     def server = Artifactory.server('admin')
-                    def deployer = server.newDeployer()
 
-                    // Deploy artifacts from Artifactory to your environment
-                    deployer.deploy(
-                        pattern: 'module-a/target*.jar',
-                        targetRepo: 'Test-repo'
+                    // upload artifacts to artifactory
+                    server.upload(
+                        spec: '''{
+                            "files": [
+                                {
+                                    "pattern": "module-a/target*.jar",
+                                    "target": "Test-repo"
+                                }
+                            ]
+                        }'''
                     )
                 }
             }
