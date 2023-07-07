@@ -11,12 +11,6 @@ pipeline {
     }
 
     stages {
-        // stage('clone') {
-        //     steps {
-        //         // Get some code from a GitHub repository
-        //         git credentialsId: 'Git-hub', url: "${Repo}"
-        //     }
-        // }    
         stage('Build') {
             steps {
                 sh "mvn clean install"
@@ -28,8 +22,9 @@ pipeline {
                 script {
                  withSonarQubeEnv(credentialsId: 'sonar') {
                  sh 'mvn sonar:sonar -Dsonar.projectName=test -Dsonar.projectKey=test'
-                }
-                }
+				}
             }
+        }
     }
+}
 }
