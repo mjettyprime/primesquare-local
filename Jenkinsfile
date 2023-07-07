@@ -28,7 +28,7 @@ pipeline {
 		}
 		stage('Push artifacts into artifactory') {
             steps {
-              rtUpload (
+              rtPublishers (
                 serverId: 'admin',
                 spec: '''{
                       "files": [
