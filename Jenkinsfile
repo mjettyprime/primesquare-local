@@ -26,20 +26,19 @@ pipeline {
 				}
 			}
 		}
-		stage('Push artifacts into artifactory') {
+		stage('Deploy to Environment') {
             steps {
-              rtPublishers (
-                serverId: 'admin',
-                spec: '''{
-                      "files": [
-                        {
-                          "pattern": "module-a/target*.jar",
-                          "target": "Test-repo"
-                        }
-                    ]
-                }'''
-              )
-          }
+                script {
+                    def server = Artifactory.server('admin')
+                    def deployer = server.newDeployer()
+
+                    // Deploy artifacts from Artifactory to your environment
+                    deployer.deploy(
+                        pattern: 'module-a/target*.jar',
+                        targetRepo: 'Test-repo'
+                    )
+                }
+            }
         }
 		stage('Archieving the Artifact'){
 			steps{
