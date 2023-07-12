@@ -27,31 +27,27 @@ pipeline {
 			}
 		}
 
-		stage('upload to Environment') {
-            steps {
-                script {
-                    def server = Artifactory.server('admin')
-
-                    // upload artifacts to artifactory
-                    server.upload(
-                        spec: '''{
-                            "files": [
-                                {
-                                    "pattern": "module-a/target*.jar",
-                                    "target": "Test-repo"
-                                }
-                            ]
-                        }'''
-                    )
-                }
-            }
-        }
-		stage('Archieving the Artifact'){
+stage('Uploading to JFrog Artifactory') {
 			steps{
-			archiveArtifacts artifacts: 'module-a/target*.jar', followSymlinks: false
+			rtUpload(
+			serverId: "admin",
+			spec: '''{
+			"files":[{
+			"pattern": "module-a/target/*.jar",
+			"target": "Test-Repo"
+			}]
 			}
-		}		
-			
+			''',
+			)
+			}
+		}
+		stage('Archieving the Artifact'){
+		steps{
+		archiveArtifacts artifacts: 'module-a/target/*.jar', followSymlinks: false
+		}
+		}
+    }
+}			
 		}
 	}
 
