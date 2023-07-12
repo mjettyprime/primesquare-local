@@ -14,40 +14,38 @@ pipeline {
         stage('Build') {
             steps {
                 sh "mvn clean install"
-            }    
-        }        
-    
-		stage('Sonar'){
+            }
+        }
+
+                stage('Sonar'){
             steps{
                 script {
-					withSonarQubeEnv(credentialsId: 'sonar') {
-					sh 'mvn sonar:sonar -Dsonar.projectName=test -Dsonar.projectKey=test'
-					}
-				}
-			}
-		}
+                                        withSonarQubeEnv(credentialsId: 'sonar') {
+                                        sh 'mvn sonar:sonar -Dsonar.projectName=test -Dsonar.projectKey=test'
+                                        }
+                                }
+                        }
+                }
 
 stage('Uploading to JFrog Artifactory') {
-			steps{
-			rtUpload(
-			serverId: "admin",
-			spec: '''{
-			"files":[{
-			"pattern": "module-a/target/*.jar",
-			"target": "Test-Repo"
-			}]
-			}
-			''',
-			)
-			}
-		}
-		stage('Archieving the Artifact'){
-		steps{
-		archiveArtifacts artifacts: 'module-a/target/*.jar', followSymlinks: false
-		}
-		}
+                        steps{
+                        rtUpload(
+                        serverId: "admin",
+                        spec: '''{
+                        "files":[{
+                        "pattern": "module-a/target/*.jar",
+                        "target": "Test-Repo"
+                        }]
+                        }
+                        ''',
+                        )
+                        }
+                }
+                stage('Archieving the Artifact'){
+                steps{
+                archiveArtifacts artifacts: 'module-a/target/*.jar', followSymlinks: false
+                }
+                }
     }
-}			
-		}
-	}
-
+}
+           
