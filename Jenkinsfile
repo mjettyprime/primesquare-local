@@ -34,7 +34,7 @@ stage('Uploading to JFrog Artifactory') {
                         spec: '''{
                         "files":[{
                         "pattern": "module-a/target/*.jar",
-                        "target": "Test-Repo"
+                        "target": "http://172.16.5.121:8082/ui/admin/repositories/local/Test-repo"
                         }]
                         }
                         ''',
