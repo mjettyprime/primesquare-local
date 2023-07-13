@@ -35,7 +35,6 @@ stage('Uploading to JFrog Artifactory') {
                         "files":[{
                         "pattern": "module-a/target/*.jar",
                         "target": "Test-Repo"
-			"artifactoryUrl": "http://172.16.5.121:8082/artifactory"
                         }]
                         }
                         ''',
